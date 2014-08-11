@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/"
+                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                     xsi:schemaLocation="http://jakarta.apache.org/log4j/ ">
+    <appender name="ConsoleAppender" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{dd.MM.yyyy HH:mm}  %-5p %c{1} %F:%n%m%n%n"/>
+        </layout>
+    </appender>
+    <root>
+        <priority value="info"/>
+        <appender-ref ref="ConsoleAppender"/>
+    </root>
+</log4j:configuration>

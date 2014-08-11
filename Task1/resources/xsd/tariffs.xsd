@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://www.raido.com/tariffs"
+            xmlns:tns = "http://www.raido.com/tariffs"
+            elementFormDefault="qualified">
+
+    <element name="tariff-list">
+        <complexType>
+            <sequence>
+                <element name="tariff"
+                         type="tns:Tariff"
+                         minOccurs="1"
+                         maxOccurs="unbounded"
+                         />
+            </sequence>
+        </complexType>
+    </element>
+
+    <complexType name="Tariff" abstract="true">
+        <sequence>
+            <element name="id" type="ID" />
+            <element name="name">
+                <simpleType>
+                    <restriction base="string">
+                        <pattern value="[(\\w){3, 15}-.,!]+" />
+                    </restriction>
+                </simpleType>
+            </element>
+            <element name="subscribers-count" type="nonNegativeInteger" />
+            <element name="monthly-fee" type="float" />
+            <element name="sms-charge" type="float" />
+        </sequence>
+    </complexType>
+
+    <complexType name="LocalTariff">
+        <complexContent>
+            <extension base="tns:Tariff">
+                <sequence>
+                    <element name="internal-charge" type="tns:CallCharge" />
+                    <element name="external-charge" type="tns:CallCharge" />
+                 </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+    
+    <complexType name="RoamingTariff">
+        <complexContent>
+            <extension base="tns:Tariff">
+                <sequence>
+                    <element name="outgoing-charge" type="tns:CallCharge" />
+                    <element name="incoming-charge" type="tns:CallCharge" />
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+
+    <complexType name="NetworkingTariff">
+        <complexContent>
+            <extension base="tns:LocalTariff">
+                <sequence>
+                    <element name="connection-speed" type="tns:ConnectionSpeed" />
+                    <element name="traffic-limit">
+                        <simpleType>
+                            <restriction base="float">
+                                <minExclusive value="0" />
+                            </restriction>
+                        </simpleType>
+                    </element>
+
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+
+    <complexType name="GuestTariff">
+        <complexContent>
+            <extension base="tns:Tariff">
+                <sequence>
+                    <element name="stay-length-discount" type="tns:Discount" />
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+
+    <complexType name="BonusTariff">
+        <complexContent>
+            <extension base="tns:NetworkingTariff">
+                <sequence>
+                    <element name="free-minutes" type="positiveInteger" />
+                    <element name="favourite-numbers" type="positiveInteger" />
+                    <element name="extra-traffic" type="positiveInteger" />
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+
+    <simpleType name="ConnectionSpeed">
+        <restriction base="float" >
+            <minExclusive value="0" />
+            <maxInclusive value="500" />
+        </restriction>
+    </simpleType>
+
+    <simpleType name="CallCharge">
+        <restriction base="float">
+            <minInclusive value="0" />
+        </restriction>
+    </simpleType>
+
+    <simpleType name="Discount">
+        <restriction base="float">
+            <maxExclusive value="100" />
+        </restriction>
+    </simpleType>
+
+</schema>
