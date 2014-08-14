@@ -1,14 +1,33 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/"
-                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                     xsi:schemaLocation="http://jakarta.apache.org/log4j/ ">
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+    <!--Appender used to output results produced by the application to stdout -->
     <appender name="ConsoleAppender" class="org.apache.log4j.ConsoleAppender">
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%m%n%n"/>
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelMatchFilter">
+            <param name="LevelToMatch" value="INFO" />
+            <param name="AcceptOnMatch" value="true" />
+        </filter>
+        <filter class="org.apache.log4j.varia.DenyAllFilter" />
+    </appender>
+
+    <!-- Appender used to report errors to the log file -->
+    <appender name="FileAppender" class="org.apache.log4j.FileAppender">
+        <param name="File" value="logs/errors.log" />
+        <param name="Threshold" value="WARN" />
+        <param name="Append" value="false"/>
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d{dd.MM.yyyy HH:mm}  %-5p %c{1} %F:%n%m%n%n"/>
         </layout>
     </appender>
+
     <root>
-        <priority value="info"/>
+        <priority value="INFO"/>
         <appender-ref ref="ConsoleAppender"/>
+        <appender-ref ref="FileAppender"/>
     </root>
+
 </log4j:configuration>

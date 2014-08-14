@@ -14,7 +14,6 @@ public enum ElementType {
      */
 
     TEXT,
-    LISTING,
     PARAGRAPH,
     SENTENCE,
 

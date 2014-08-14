@@ -5,9 +5,6 @@ import com.raido.task2.element.TextElement;
 import java.util.HashSet;
 import java.util.List;
 
-/**
- * Created by Raido_DDR on 8/9/2014.
- */
 public class TextHandler implements ElementHandler {
 
     private ElementHandler successor;

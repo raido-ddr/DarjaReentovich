@@ -5,14 +5,7 @@ import com.raido.task2.type.ElementType;
 
 import java.util.List;
 
-/**
- * This class represents a primitive text element
- * that is a leaf of the tree model of a parsed text.
- */
-
 public class Leaf implements TextElement {
-
-    private static final String WORD_DELIMITER = " ";
 
     private ElementType type;
 
@@ -21,15 +14,6 @@ public class Leaf implements TextElement {
     public Leaf(ElementType type, String textContents) {
         this.type = type;
         this.textContents = textContents;
-    }
-
-    @Override
-    public void addChildElement(TextElement childElement) {
-        throw new UnsupportedOperationException();
-    }
-
-    public String getContents() {
-        return textContents;
     }
 
     @Override
@@ -78,7 +62,6 @@ public class Leaf implements TextElement {
         if (this == o) {
             return true;
         }
-
         if ((o == null) || (getClass() != o.getClass())) {
             return false;
         }
@@ -88,7 +71,6 @@ public class Leaf implements TextElement {
         if (!textContents.equals(leaf.textContents)) {
             return false;
         }
-
         if (type != leaf.type) {
             return false;
         }

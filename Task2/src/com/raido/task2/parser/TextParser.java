@@ -43,25 +43,30 @@ public class TextParser {
     private static final String EXCEPTION_MESSAGE_FILE =
             "exception_message";
 
-    private static final String LISTING_PATTERN_KEY = "listing_pattern";
+    private static Pattern paragraphPattern;
 
-    private static Pattern paragraphPattern =
-            Pattern.compile(getParagraphPattern());
+    private static Pattern sentencePattern;
 
-    private static Pattern sentencePattern =
-            Pattern.compile(getSentencePattern());
+    private static Pattern lexemePattern;
 
-    private static Pattern lexemePattern =
-            Pattern.compile(getLexemePattern());
+    private static Pattern punctuationPattern;
 
-    private static Pattern punctuationPattern =
-            Pattern.compile(getPunctuationPattern());
+    private static Pattern wordPattern;
 
-    private static Pattern wordPattern =
-            Pattern.compile(getWordPattern());
+    static {
+        paragraphPattern = Pattern.compile(regexBundle.getString(PARAGRAPH_PATTERN_KEY),
+                Pattern.MULTILINE);
 
-  /*  private static Pattern listingPattern =
-            Pattern.compile(getListingPattern());*/
+        sentencePattern = Pattern.compile(regexBundle.getString(SENTENCE_PATTERN_KEY));
+
+        lexemePattern = Pattern.compile(regexBundle.getString(LEXEME_PATTERN_KEY));
+
+        punctuationPattern = Pattern.compile(regexBundle.getString(PUNCTUATION_PATTERN_KEY));
+
+        wordPattern = Pattern.compile(regexBundle.getString(WORD_PATTERN_KEY));
+
+
+    }
 
     public static List<TextElement> splitElement(ElementType type,
             String textRepresentation) throws TechnicalException {
@@ -83,10 +88,8 @@ public class TextParser {
     public static List<TextElement> splitIntoParagraphs(String textRepresentation)
             throws TechnicalException {
 
-        List<TextElement> paragraphList = new ArrayList<TextElement>();
+        List<TextElement> paragraphList = new ArrayList<>();
 
-        Pattern paragraphPattern = Pattern.compile(getParagraphPattern(),
-                Pattern.MULTILINE);
         String[] paragraphsTextArray =
                 paragraphPattern.split(textRepresentation);
 
@@ -100,9 +103,8 @@ public class TextParser {
     public static List<TextElement> splitIntoSentences(String textRepresentation)
             throws TechnicalException {
 
-        List<TextElement> sentenceList = new ArrayList<TextElement>();
+        List<TextElement> sentenceList = new ArrayList<>();
 
-        Pattern sentencePattern = Pattern.compile(getSentencePattern());
         String[] sentencesTextArray =
                 sentencePattern.split(textRepresentation);
 
@@ -114,7 +116,7 @@ public class TextParser {
     }
 
     public static List<TextElement> splitIntoLexemes(String textRepresentation) {
-        List<TextElement> lexemeList = new ArrayList<TextElement>();
+        List<TextElement> lexemeList = new ArrayList<>();
 
         Matcher matcher = lexemePattern.matcher(textRepresentation);
 
@@ -124,9 +126,7 @@ public class TextParser {
                 lexemeList.add(new Leaf(WORD, lexemeText));
             } else if(isPunctuationSign(lexemeText)) {
                 lexemeList.add(new Leaf(PUNCTUATION_SIGN, lexemeText));
-            }/* else if(isListing(lexemeText)) {
-                lexemeList.add(new Leaf(LISTING, lexemeText));
-            }*/
+            }
         }
 
         return lexemeList;
@@ -141,36 +141,6 @@ public class TextParser {
         Matcher matcher =
                 punctuationPattern.matcher(textRepresentation);
         return (matcher.find());
-    }
-
-    /*private static boolean isListing(String textRepresentation) {
-        Matcher matcher =
-                listingPattern.matcher(textRepresentation);
-        return (matcher.find());
-    }*/
-
-    private static String getWordPattern() {
-        return regexBundle.getString(WORD_PATTERN_KEY);
-    }
-
-    private static String getPunctuationPattern() {
-        return regexBundle.getString(PUNCTUATION_PATTERN_KEY);
-    }
-
-    private static String getParagraphPattern() {
-        return regexBundle.getString(PARAGRAPH_PATTERN_KEY);
-    }
-
-    private static String getSentencePattern() {
-        return regexBundle.getString(SENTENCE_PATTERN_KEY);
-    }
-
-    private static String getLexemePattern() {
-        return regexBundle.getString(LEXEME_PATTERN_KEY);
-    }
-
-    private static String getListingPattern() {
-        return regexBundle.getString(LISTING_PATTERN_KEY);
     }
 
 }

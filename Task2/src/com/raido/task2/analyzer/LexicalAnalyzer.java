@@ -3,12 +3,7 @@ package com.raido.task2.analyzer;
 import com.raido.task2.entity.Composite;
 import com.raido.task2.exception.LogicalException;
 import com.raido.task2.exception.TechnicalException;
-import com.raido.task2.handler.LexemeHandler;
-import com.raido.task2.handler.ParagraphHandler;
-import com.raido.task2.handler.SentenceHandler;
-import com.raido.task2.handler.TextHandler;
 import com.raido.task2.type.ElementType;
-import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -21,16 +16,13 @@ import java.util.ResourceBundle;
 public class LexicalAnalyzer {
 
     private static final String SOURCE_FILE_NAME =
-            "resources/test.txt";
+            "resources/text/test2.txt";
 
     private static final String EXCEPTION_MESSAGE_FILE_NAME =
             "exception_message";
 
-    private static Logger logger =
-            Logger.getLogger(LexicalAnalyzer.class);
 
-
-    public void performTextAnalysis()
+    public Composite analyzeText()
             throws LogicalException, TechnicalException {
 
         String textToParse = null;
@@ -47,27 +39,7 @@ public class LexicalAnalyzer {
             throw new TechnicalException(e);
         }
 
-        Composite parsedText = parseText(textToParse);
-
-        LexemeHandler wordHandler = new LexemeHandler();
-        SentenceHandler sentenceHandler = new SentenceHandler();
-        sentenceHandler.setSuccessor(wordHandler);
-
-        ParagraphHandler paragraphHandler = new ParagraphHandler();
-        paragraphHandler.setSuccessor(sentenceHandler);
-
-        TextHandler textHandler = new TextHandler();
-        textHandler.setSuccessor(paragraphHandler);
-
-//        /*HashSet<TextElement> wordsOfGivenLength =
-//                textHandler.findWordsByLength(parsedText, 4);
-//
-//        System.out.println(wordsOfGivenLength);
-        //System.out.println(textHandler.assembleText(parsedText));
-
-        textHandler.removeFirstLetterOccurrences(parsedText);
-
-        logger.info(textHandler.assembleText(parsedText));
+        return parseText(textToParse);
     }
 
     private String readTextFromFile(String path, Charset charset)

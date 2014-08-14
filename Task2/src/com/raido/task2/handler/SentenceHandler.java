@@ -3,18 +3,28 @@ package com.raido.task2.handler;
 import com.raido.task2.element.TextElement;
 import com.raido.task2.type.ElementType;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.ResourceBundle;
-import java.util.regex.Pattern;
 
-/**
- * Created by Raido_DDR on 8/9/2014.
- */
 public class SentenceHandler implements ElementHandler {
 
     private ElementHandler successor;
+
+    private static HashSet<String> spacePrecededSigns;
+
+    private static HashSet<String> boundToWordsSigns;
+
+    static {
+        spacePrecededSigns =
+                new HashSet<>(Arrays.asList("\"", "(", "[", "{", "\'",
+                        "+", "=", "<", ">"));
+
+        boundToWordsSigns =
+                new HashSet<>(Arrays.asList("(", "[", "{", "-"));
+
+    }
 
     @Override
     public String assembleText(TextElement sentence) {
@@ -25,16 +35,25 @@ public class SentenceHandler implements ElementHandler {
 
         do {
             sb.append(iterator.next());
-            if(iterator.hasNext()) {
-                if(iterator.next().getType() == ElementType.WORD) {
-                    sb.append(" ");
-                }
-                iterator.previous();
-            }
+            iterator.previous();
 
+            if(! boundToWordsSigns.contains(iterator.next().getTextContents())) {
+                if(iterator.hasNext()) {
+                    if(needsPrecedingWhiteSpace(iterator.next())) {
+                        sb.append(" ");
+                    }
+                    iterator.previous();
+                }
+            }
         } while(iterator.hasNext());
 
         return sb.toString();
+    }
+
+    private boolean needsPrecedingWhiteSpace(TextElement lexeme) {
+
+        return (lexeme.getType() == ElementType.WORD)
+                || (spacePrecededSigns.contains(lexeme.getTextContents()));
     }
 
     @Override

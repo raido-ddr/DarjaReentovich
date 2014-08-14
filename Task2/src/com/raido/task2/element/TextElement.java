@@ -3,7 +3,6 @@ package com.raido.task2.element;
 import com.raido.task2.exception.TechnicalException;
 import com.raido.task2.type.ElementType;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -19,7 +18,6 @@ import java.util.List;
  */
 
 public interface TextElement {
-    void addChildElement(TextElement childElement);
 
     void split(String textRepresentation) throws TechnicalException;
 

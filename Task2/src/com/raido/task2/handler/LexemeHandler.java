@@ -4,17 +4,10 @@ import com.raido.task2.element.TextElement;
 import com.raido.task2.type.ElementType;
 
 import java.util.HashSet;
-import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Created by Raido_DDR on 8/10/2014.
- */
 public class LexemeHandler implements ElementHandler {
-
-    private static final ResourceBundle regexBundle =
-            ResourceBundle.getBundle("regex");
 
     private ElementHandler successor;
 

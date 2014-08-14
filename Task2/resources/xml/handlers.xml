@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<handlers>
+    <handler>com.raido.task2.handler.LexemeHandler</handler>
+    <handler>com.raido.task2.handler.SentenceHandler</handler>
+    <handler>com.raido.task2.handler.ParagraphHandler</handler>
+    <handler>com.raido.task2.handler.TextHandler</handler>
+</handlers>
