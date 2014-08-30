@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tariffs xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns="http://www.raido.com/tariffs"
+             xsi:schemaLocation="http://www.raido.com/tariffs tariffs.xsd">
+
+    <local-tariff>
+        <id>id1</id>
+        <name>Hello</name>
+        <monthly-fee>20.5</monthly-fee>
+        <sms-charge>0.5</sms-charge>
+        <internal-charge>3.7</internal-charge>
+        <external-charge>2.5</external-charge>
+    </local-tariff>
+
+    <networking-tariff status="supported">
+        <id>id2</id>
+        <name>MobileNet</name>
+        <monthly-fee>28.5</monthly-fee>
+        <sms-charge>0.4</sms-charge>
+        <internal-charge>2.6</internal-charge>
+        <external-charge>3.8</external-charge>
+        <connection-speed>100</connection-speed>
+    </networking-tariff>
+
+    <bonus-tariff status="unavailable">
+        <id>id3</id>
+        <name>Optimal</name>
+        <monthly-fee>15</monthly-fee>
+        <sms-charge>0.5</sms-charge>
+        <internal-charge>3.5</internal-charge>
+        <external-charge>4.7</external-charge>
+        <connection-speed>100</connection-speed>
+        <free-minutes>30</free-minutes>
+        <favourite-numbers>5</favourite-numbers>
+    </bonus-tariff>
+
+    <roaming-tariff status="active">
+        <id>id4</id>
+        <name>International</name>
+        <monthly-fee>0</monthly-fee>
+        <sms-charge>5.5</sms-charge>
+        <outgoing-charge>10</outgoing-charge>
+        <incoming-charge>6</incoming-charge>
+    </roaming-tariff>
+
+    <guest-tariff>
+        <id>id5</id>
+        <name>Welcome</name>
+        <monthly-fee>0</monthly-fee>
+        <sms-charge>0.6</sms-charge>
+        <internal-charge>2.5</internal-charge>
+        <external-charge>3.4</external-charge>
+        <stay-length-discount>15</stay-length-discount>
+    </guest-tariff>
+
+    <roaming-tariff status="active">
+        <id>id6</id>
+        <name>Visitor</name>
+        <monthly-fee>0.5</monthly-fee>
+        <sms-charge>4.0</sms-charge>
+        <outgoing-charge>8</outgoing-charge>
+        <incoming-charge>5</incoming-charge>
+    </roaming-tariff>
+
+</tariffs>

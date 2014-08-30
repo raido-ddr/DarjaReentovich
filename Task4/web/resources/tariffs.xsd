@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://www.raido.com/tariffs"
+            xmlns:trns = "http://www.raido.com/tariffs"
+            elementFormDefault="qualified">
+
+    <element name="tariffs">
+        <complexType>
+            <sequence>
+                <element ref="trns:tariff"
+                         minOccurs="1"
+                         maxOccurs="unbounded"
+                         />
+            </sequence>
+        </complexType>
+    </element>
+
+    <complexType name="Tariff" abstract="true">
+        <sequence>
+            <element name="id" >
+                <simpleType>
+                    <restriction base="ID">
+                        <pattern value="([\w]{2,10})" />
+                    </restriction>
+                </simpleType>
+            </element>
+            <element name="name">
+                <simpleType>
+                    <restriction base="string">
+                        <pattern value="\w{3,15}[,!?\+]*" />
+                    </restriction>
+                </simpleType>
+            </element>
+            <element name="monthly-fee" type="float" />
+            <element name="sms-charge" type="float" />
+        </sequence>
+        <attribute name="status" type="trns:Status" use="optional" default="active"/>
+    </complexType>
+
+    <complexType name="LocalTariff">
+        <complexContent>
+            <extension base="trns:Tariff">
+                <sequence>
+                    <element name="internal-charge" type="trns:CallCharge" />
+                    <element name="external-charge" type="trns:CallCharge" />
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+    
+    <complexType name="RoamingTariff">
+        <complexContent>
+            <extension base="trns:Tariff">
+                <sequence>
+                    <element name="outgoing-charge" type="trns:CallCharge" />
+                    <element name="incoming-charge" type="trns:CallCharge" />
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+
+    <complexType name="NetworkingTariff">
+        <complexContent>
+            <extension base="trns:LocalTariff">
+                <sequence>
+                    <element name="connection-speed" type="trns:ConnectionSpeed" />
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+
+    <complexType name="GuestTariff">
+        <complexContent>
+            <extension base="trns:LocalTariff">
+                <sequence>
+                    <element name="stay-length-discount" type="trns:Discount" />
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+
+    <complexType name="BonusTariff">
+        <complexContent>
+            <extension base="trns:NetworkingTariff">
+                <sequence>
+                    <element name="free-minutes" type="positiveInteger" />
+                    <element name="favourite-numbers" type="positiveInteger" />
+                </sequence>
+            </extension>
+        </complexContent>
+    </complexType>
+
+    <simpleType name="ConnectionSpeed">
+        <restriction base="float" >
+            <minExclusive value="0" />
+            <maxInclusive value="500" />
+        </restriction>
+    </simpleType>
+
+    <simpleType name="CallCharge">
+        <restriction base="float">
+            <minInclusive value="0" />
+        </restriction>
+    </simpleType>
+
+    <simpleType name="Discount">
+        <restriction base="float">
+            <maxExclusive value="100" />
+        </restriction>
+    </simpleType>
+
+    <simpleType name="Status">
+        <restriction base="string">
+            <enumeration value="active"></enumeration>
+            <enumeration value="supported"></enumeration>
+            <enumeration value="unavailable"></enumeration>
+        </restriction>
+    </simpleType>
+
+    <element name="tariff" type="trns:Tariff" abstract="true" />
+
+    <element name="local-tariff" type="trns:LocalTariff" substitutionGroup="trns:tariff" />
+
+    <element name="roaming-tariff" type="trns:RoamingTariff" substitutionGroup="trns:tariff" />
+
+    <element name="networking-tariff" type="trns:NetworkingTariff" substitutionGroup="trns:tariff" />
+
+    <element name="guest-tariff" type="trns:GuestTariff" substitutionGroup="trns:tariff" />
+
+    <element name="bonus-tariff" type="trns:BonusTariff" substitutionGroup="trns:tariff" />
+
+</schema>
