@@ -3,11 +3,12 @@ package com.raido.task3.main;
 import com.raido.task3.entity.Car;
 import com.raido.task3.entity.ParkingLot;
 import com.raido.task3.entity.ParkingSpace;
-import org.apache.log4j.Logger;
 
 import java.util.LinkedList;
-import java.util.Random;
-import java.util.concurrent.*;
+import java.util.concurrent.Exchanger;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 
 public class MainRunner {

@@ -1,7 +1,6 @@
 package com.raido.task3.entity;
 
 import com.raido.task3.exception.ResourceException;
-import com.raido.task3.exception.TimeoutExceededException;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
